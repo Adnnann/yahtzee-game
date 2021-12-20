@@ -169,7 +169,7 @@ const ones = (id, diceArray) => {
     const element = document.getElementById(`${id}`)
     element.style.backgroundColor = "grey"
     element.setAttribute('class', 'disabled')
-       const score = document.getElementById(`scoreDescription-${descriptionNumber}`)
+    const score = document.getElementById(`scoreDescription-${descriptionNumber}`)
     const category = document.getElementById(`scoreCategory-${descriptionNumber}`)
     category.style.color = "white"
     score.style.backgroundColor = "grey"

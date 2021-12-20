@@ -40,12 +40,12 @@ const Dices = () => {
     useEffect(()=>{
    
         setHistory()
-        const allScore = JSON.parse(window.localStorage.getItem('gamesHistory'))
-        let score = ""
-        if(allScore.length != 0 && allScore){
-            score = Math.max(...allScore)
-            setHighScore(score)
-        }
+        // const allScore = JSON.parse(window.localStorage.getItem('gamesHistory'))
+        // let score = ""
+        // if(allScore.length != 0 && allScore){
+        //     score = Math.max(...allScore)
+        //     setHighScore(score)
+        // }
     },[])
 
 
@@ -54,9 +54,12 @@ const Dices = () => {
     const setHistory = () =>{
         if(localStorage.getItem('gamesHistory') === null){
                 window.localStorage.setItem('gamesHistory', JSON.stringify([]));
+                window.localStorage.setItem('gameHighScore',JSON.stringify())
             }else{
                 let savedHistory = JSON.parse(localStorage.getItem('gamesHistory'))
+                let highscore = JSON.parse(localStorage.getItem('gameHighScore'))
                 setGamesHistory(savedHistory)         
+                setHighScore(highscore)
             }
     }
 
@@ -64,17 +67,21 @@ const Dices = () => {
     const updateResult = () =>{
         setGamesHistory([...gamesHistory, totalScore])
         window.localStorage.setItem('gamesHistory',totalScore)
+        
 
         if(gamesHistory.length !== 0){
             let score = Math.max(...gamesHistory)
 
             if(totalScore < score){
                 setHighScore(score)
+                window.localStorage.setItem('gameHighScore',score)
             }else{
                 setHighScore(totalScore)
+                window.localStorage.setItem('gameHighScore',totalScore)
             }   
         }else{
             setHighScore(totalScore)
+            window.localStorage.setItem('gameHighScore',totalScore)
         }
  
 }
