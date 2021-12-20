@@ -14,11 +14,15 @@
 }
 
 .dices {
-  animation:  App-logo-spin 0.5s ease-in-out;
+  /* animation:  App-logo-spin 0.5s ease-in-out; */
 }
 
 .die {
   animation:  App-logo-spin 0.5s ease-in-out;
+}
+
+.die2 {
+  animation:  die2 0.5s ease-in-out;
 }
 
 .App-header {
@@ -43,6 +47,21 @@
   to {
     transform: rotate(360deg);
   }
+  100% {
+    pointer-events: none;
+  }
+}
+
+@keyframes die2 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+  100% {
+    pointer-events: none;
+  }
 }
 
 .disabled{
@@ -57,4 +76,8 @@
 }
 .score{
   color:"white"
+}
+.description{
+  pointer-events: none;
+
 }

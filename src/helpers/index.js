@@ -1,5 +1,6 @@
 const ones = (id, diceArray) => {
     const description_id = id.split('-')
+
     const descriptionNumber = description_id[1]
     const arr = diceArray
     const element = document.getElementById(`${id}`)
@@ -10,6 +11,7 @@ const ones = (id, diceArray) => {
     category.style.color = "white"
     score.style.backgroundColor = "grey"
     score.style.color = "white"
+   
     let result = 0
     if(arr.includes(1)){
      result = arr.filter(element => element === 1)
@@ -250,7 +252,7 @@ const smallStraight = (id, diceArray) => {
 
     let unique = arr.filter((item, i, ar) => ar.indexOf(item) === i);
     let result = 0
-    if(unique.length === 4){
+    if(unique.length > 3){
         result = 30
         score.innerHTML = 30
     }else{

@@ -3,8 +3,6 @@ import { useState } from 'react'
 import { Table } from 'semantic-ui-react'
 const ScoringCategory = ({scoringHandler, totalScore}) => {
 
-    const [dicesArray, setDicesArr] = useState([])
-    const [status, setStatus] = useState(0)
     const [scoringCategory, setScoringCategory] = useState([
         {
 // WORKS FINE. REPLICATE IN ALL FOLLOWING PARTS
@@ -66,9 +64,9 @@ const ScoringCategory = ({scoringHandler, totalScore}) => {
     ])
 
  
-let test = []
+let dices = []
     for(let i = 0; i< scoringCategory.length; i++){
-       test[i] = <Table.Row key={i} /*onClick={scoringCategory[i].function}*/ onClick={scoringHandler} id={`scoreRow-${i+1}`}>
+       dices[i] = <Table.Row key={i} onClick={scoringHandler} id={`scoreRow-${i+1}`}>
             <Table.Cell id={`scoreCategory-${i+1}`}>{scoringCategory[i].type}</Table.Cell>
             <Table.Cell id={`scoreDescription-${i+1}`} className='description'>{scoringCategory[i].description}</Table.Cell>
           </Table.Row>
@@ -78,17 +76,17 @@ let test = []
         <Table celled>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Status</Table.HeaderCell>
+            <Table.HeaderCell>Category</Table.HeaderCell>
+            <Table.HeaderCell>Description</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
     
         <Table.Body >
         
-       { status === 0 ? 
-           test.map(item=>{
+       { 
+           dices.map(item=>{
             return item;
-        }) : null
+           })
        }
        <Table.Row style={{backgroundColor:"grey"}}>
             <Table.Cell id="totalScore">Total score</Table.Cell>

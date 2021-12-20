@@ -31,14 +31,17 @@ const Dices = () => {
     const [diceValues, setDiceValues] = useState([])
     const [disable, setDisable] = useState([])
     const [totalScore, setTotalScore] = useState(0)
-    const [rolling, setRolling] = useState(true)
+    const [rolling, setRolling] = useState("die")
     const [round, setRound] = useState(0)
     const [gamesHistory, setGamesHistory] = useState([]);
     const [highScore, setHighScore] = useState()
 
-    useEffect(()=>{
-        setHistory()
+    
 
+   
+    useEffect(()=>{
+   
+        setHistory()
         const allScore = JSON.parse(window.localStorage.getItem('gamesHistory'))
         let score = ""
         if(allScore.length != 0 && allScore){
@@ -71,16 +74,16 @@ const Dices = () => {
 if(round === 13){
     updateResult()
     document.getElementById('gameOver').style.visibility = "visible"
+    document.querySelectorAll('.diceImages').forEach(el=>{
+        el.style.visibility = "hidden"
+    })
+    document.getElementById('shuffleDices').style.visibility = "hidden"
+    
     setRound(0)
 }
 
 
 
-
-
-
-
-    let roll = true
     let status = []
     status = Array(5).fill(false)
 
@@ -98,6 +101,8 @@ if(round === 13){
 
         
         const id = e.target.id
+
+        e.target.classList.add('dont')
         e.preventDefault()
         if(id === 'dice-0'){
             status[0] = true;
@@ -121,8 +126,15 @@ if(round === 13){
    
 
     let dices = []
-    
+
+   
     const shuffleDices = () => {
+
+        if(rolling === 'die'){
+            setRolling('die2')
+        }else{
+            setRolling('die')
+        }
 
    
 console.log(rolling)
@@ -140,25 +152,31 @@ console.log(rolling)
                 dices[i] = <Die image={image} key={i} value={random+1} diceHandler={diceFunction} id={`dice-${i}`} disabled={disable[i]} rolling={rolling}/>   
             }else if(disable){
                 dices[i] = <Die image={dice[`img${diceValues[i]-1}`]} key={i} value={diceValues[i]} diceHandler={diceFunction} id={`dice-${i}`} disabled={disable[i]} 
-                rolling={rolling}/>  
+                />  
             }
-
+            
         }
-       
+
         setDiceImag(dices)
         setNumberOfTries(numberOfTries - 1)                  
-    
+        
         dices.forEach(el=>{
             arrayOfDices.push(el.props.value)
         })
 
         setDiceValues([...arrayOfDices])
 
-   
     }
 
+    
     const newRound = () => {
-      
+
+        if(rolling === 'die'){
+            setRolling('die2')
+        }else{
+            setRolling('die')
+        }
+
         let dices = []
         let arrayOfDices = []
         for(let i=0;i<5;i++){
@@ -182,11 +200,16 @@ console.log(rolling)
         document.querySelectorAll('.dices').forEach(el=>{
             el.style.opacity = 1
         })
-
+   
     }
 
     const initImages = () =>{
-       
+        
+        if(rolling === 'die'){
+            setRolling('die2')
+        }else{
+            setRolling('die')
+        }
   
         let arrayOfDices = []
         for(let i=0;i<5;i++){
@@ -197,21 +220,24 @@ console.log(rolling)
    
                 arrayOfDices.push(random+1)
             }else if(disable){
-                dices[i] = <Die image={dice[`img${diceValues[i]-1}`]} key={i} value={diceValues[i]} diceHandler={diceFunction} id={`dice-${i}`} disabled={disable[i]}
-                 rolling={rolling}/>  
+                dices[i] = <Die image={dice[`img${diceValues[i]-1}`]} key={i} value={diceValues[i]} diceHandler={diceFunction} id={`dice-${i}`} 
+                disabled={disable[i]} rolling={rolling}/>  
                 arrayOfDices.push(diceValues[i])
 
             }
 
         }
+ 
         setDiceImag(dices)
-        setDiceValues([...arrayOfDices])
-
-
        
+        setDiceValues([...arrayOfDices])
+  
     }
+
+    
     
      const scoreHandler = (e) => {
+        
       const id = e.target.id
       let num = 0
       setRound(round+1)
@@ -224,10 +250,12 @@ console.log(rolling)
             newRound()
             break;
         case 'scoreCategory-2':
+            
             twos(id, diceValues)
             num = twos(id, diceValues)
             setTotalScore(totalScore+num)
             newRound()
+            
             break;
         case 'scoreCategory-3':
             threes(id, diceValues)
@@ -296,16 +324,10 @@ console.log(rolling)
             newRound()
             break;
       }
-      //setTotalScore(totalScore+num)
+      
     }
 
-    useEffect(()=>{
-        if(rolling){
-            setRolling(false)
-        }else{
-            setRolling(true)
-        }
-    },[])
+
 
     useEffect(()=>{
         localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory))
@@ -319,10 +341,10 @@ console.log(rolling)
         
  <GameOver />
         {diceImg.map(item=>{
-            return <Card style={{backgroundColor:"white", display:"inline-flex", width:"8%", marginRight:"1%", marginTop:"5%"}}>{item}</Card>
+            return <Card style={{backgroundColor:"white", display:"inline-flex", width:"8%", marginRight:"1%", marginTop:"5%"}} className="diceImages">{item}</Card>
         })}
         <div style={{height:"10%"}}>
-       <Button type="button" onClick={shuffleDices} style={{width:"20%",fontSize:"26px"}} disabled={numberOfTries === 0 ? true : false}>{numberOfTries} tries left</Button>
+       <Button id="shuffleDices" type="button" onClick={shuffleDices} style={{width:"20%",fontSize:"26px"}} disabled={numberOfTries === 0 ? true : false}>{numberOfTries} tries left</Button>
        </div>
        <ScoringCategory scoringHandler={scoreHandler} totalScore={totalScore} />
        </>      
