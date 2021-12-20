@@ -1,7 +1,13 @@
-const Die = ({image, disabled}) => {
-    
+import '../App.css'
+
+
+const Die = ({image, disabled, diceHandler, id, rolling}) => {
+
+
     return(
-       <img src={image} style={{width:"4%", height:"4%", marginRight:"1%",marginTop:"1%"}}></img>
+        
+        <img src={image} wrapped ui={false} onClick={diceHandler} status={disabled} id={id} className= "dices"  alt="die"/>
+       
     )
 }
 

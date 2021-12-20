@@ -13,6 +13,14 @@
   }
 }
 
+.dices {
+  animation:  App-logo-spin 0.5s ease-in-out;
+}
+
+.die {
+  animation:  App-logo-spin 0.5s ease-in-out;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -35,4 +43,18 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.disabled{
+  pointer-events: none;
+  background-color: lightgrey;
+  color: white;
+  font-weight: bolder;
+  text-decoration: line-through;
+  text-decoration-style: solid;
+  text-decoration-color: black;
+  font-size: larger;
+}
+.score{
+  color:"white"
 }
