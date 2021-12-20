@@ -67,6 +67,20 @@ const Dices = () => {
     const updateResult = () =>{
         setGamesHistory([...gamesHistory, totalScore])
         window.localStorage.setItem('gamesHistory',totalScore)
+
+        if(gamesHistory.length !== 0){
+            let score = Math.max(...gamesHistory)
+
+            if(totalScore < score){
+                setHighScore(score)
+            }else{
+                setHighScore(totalScore)
+            }
+
+            
+        }else{
+            setHighScore(totalScore)
+        }
  
 }
 
@@ -80,6 +94,7 @@ if(round === 13){
     document.getElementById('shuffleDices').style.visibility = "hidden"
     
     setRound(0)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 
@@ -136,8 +151,6 @@ if(round === 13){
             setRolling('die')
         }
 
-   
-console.log(rolling)
         if(disable.length > 0){
             disable.map((item, index)=>{
                 status[index] = item
@@ -341,10 +354,11 @@ console.log(rolling)
         
  <GameOver />
         {diceImg.map(item=>{
-            return <Card style={{backgroundColor:"white", display:"inline-flex", width:"8%", marginRight:"1%", marginTop:"5%"}} className="diceImages">{item}</Card>
+            return <Card style={{backgroundColor:"white", display:"inline-flex", width:"8%", marginRight:"1%", marginTop:"1%"}} className="diceImages">{item}</Card>
         })}
         <div style={{height:"10%"}}>
-       <Button id="shuffleDices" type="button" onClick={shuffleDices} style={{width:"20%",fontSize:"26px"}} disabled={numberOfTries === 0 ? true : false}>{numberOfTries} tries left</Button>
+       <Button id="shuffleDices" type="button" onClick={shuffleDices} style={{width:"20%",fontSize:"26px", marginLeft:"10%"}} disabled={numberOfTries === 0 ? true : false}>{numberOfTries} 
+       {numberOfTries === 2 || numberOfTries === 0 ? ' rolls' : ' roll'} left</Button>
        </div>
        <ScoringCategory scoringHandler={scoreHandler} totalScore={totalScore} />
        </>      
