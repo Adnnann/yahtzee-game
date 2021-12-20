@@ -42,7 +42,7 @@ const ScoringCategory = ({scoringHandler, totalScore}) => {
         },
         {
             type:"Full House",
-            description:"If 3 of one value and two of another score 25"
+            description:"If 3 of one value and 2 of another score 25"
         },
         {
             type:"Small Straight",

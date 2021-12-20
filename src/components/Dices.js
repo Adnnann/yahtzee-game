@@ -37,8 +37,6 @@ const Dices = () => {
     const [highScore, setHighScore] = useState()
 
     
-
-   
     useEffect(()=>{
    
         setHistory()
@@ -47,8 +45,7 @@ const Dices = () => {
         if(allScore.length != 0 && allScore){
             score = Math.max(...allScore)
             setHighScore(score)
-}
-
+        }
     },[])
 
 
@@ -75,9 +72,7 @@ const Dices = () => {
                 setHighScore(score)
             }else{
                 setHighScore(totalScore)
-            }
-
-            
+            }   
         }else{
             setHighScore(totalScore)
         }
@@ -116,9 +111,9 @@ if(round === 13){
 
         
         const id = e.target.id
-
         e.target.classList.add('dont')
         e.preventDefault()
+
         if(id === 'dice-0'){
             status[0] = true;
         }else if(id === 'dice-1'){
@@ -137,12 +132,7 @@ if(round === 13){
      
     }
    
-   
-   
-
     let dices = []
-
-   
     const shuffleDices = () => {
 
         if(rolling === 'die'){
@@ -192,18 +182,16 @@ if(round === 13){
 
         let dices = []
         let arrayOfDices = []
+
         for(let i=0;i<5;i++){
-        
-                let random = Math.floor(Math.random()*6)
-                let image = dice[`img${random}`]
-                dices[i] = <Die image={image} key={i} value={random+1} diceHandler={diceFunction} id={`dice-${i}`} disabled={disable[i]} rolling={rolling}/>   
-            }
-            setNumberOfTries(2)    
-           
-       
+            let random = Math.floor(Math.random()*6)
+            let image = dice[`img${random}`]
+            dices[i] = <Die image={image} key={i} value={random+1} diceHandler={diceFunction} id={`dice-${i}`} disabled={disable[i]} rolling={rolling}/>   
+        }
+
+        setNumberOfTries(2)    
         setDiceImag(dices)
                  
-    
         dices.forEach(el=>{
             arrayOfDices.push(el.props.value)
         })
@@ -242,9 +230,7 @@ if(round === 13){
         }
  
         setDiceImag(dices)
-       
         setDiceValues([...arrayOfDices])
-  
     }
 
     
@@ -254,7 +240,7 @@ if(round === 13){
       const id = e.target.id
       let num = 0
       setRound(round+1)
-      console.log(round)
+    
       switch(id){
         case 'scoreCategory-1':
             ones(id, diceValues)
