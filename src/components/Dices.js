@@ -337,7 +337,7 @@ console.log(rolling)
        
  <>
     <di><h1 style={{ marginBottom:"0", float:"right"}}>{highScore ? `High score: ${highScore}` : null}</h1></di>
-    <h1 style={{ marginTop:"0",margin:"0 auto",fontSize:"48px",marginBottom:"0"}}>Yatzee</h1>
+    <h1 style={{ marginTop:"0",margin:"0 auto",fontSize:"48px",marginBottom:"0"}}>Yatzy</h1>
         
  <GameOver />
         {diceImg.map(item=>{

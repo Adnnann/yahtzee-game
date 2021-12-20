@@ -1,4 +1,4 @@
-import logo from '../assets/yahtze.jpg'
+import logo from '../assets/yatzy.jpg'
 import Dices from './Dices';
 import { Image } from 'semantic-ui-react';
 
