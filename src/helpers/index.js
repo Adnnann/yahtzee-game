@@ -21,6 +21,7 @@ const ones = (id, diceArray) => {
     result = 0
      score.innerHTML = 0
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
  }
 
@@ -47,6 +48,7 @@ const ones = (id, diceArray) => {
     result = 0
      score.innerHTML = 0
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
  }
 
@@ -73,7 +75,7 @@ const ones = (id, diceArray) => {
      result = 0
      score.innerHTML = 0
     }
-
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
  }
 
@@ -101,7 +103,7 @@ const ones = (id, diceArray) => {
      result = 0
      score.innerHTML = 0
     }
-
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
  }
 
@@ -129,6 +131,7 @@ const ones = (id, diceArray) => {
       result = 0
      score.innerHTML = 0
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
  }
 
@@ -156,7 +159,7 @@ const ones = (id, diceArray) => {
      result = 0
      score.innerHTML = 0
     }
-
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
  }
 
@@ -184,7 +187,7 @@ const ones = (id, diceArray) => {
         result = 0
         score.innerHTML = 0
     }
-
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
    
 }
@@ -213,7 +216,7 @@ const fourOfKind = (id, diceArray) => {
         result = 0
         score.innerHTML = 0
     }
-
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
 }
 
@@ -242,7 +245,7 @@ const fullHouse = (id, diceArray) => {
         result = 0
         score.innerHTML = 0
     }
-
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
 }
 
@@ -273,7 +276,7 @@ const smallStraight = (id, diceArray) => {
         result = 0
         score.innerHTML = 0
     }
-   
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
 }
 
@@ -301,7 +304,7 @@ const largeStraight = (id, diceArray) => {
         result = 0
         score.innerHTML = 0
     }
-  
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
 }
 
@@ -329,6 +332,7 @@ const yatzee = (id, diceArray) => {
         result = 0
         score.innerHTML = 0
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     return result
 }
@@ -350,6 +354,7 @@ const chance = (id, diceArray) => {
     let result = 0;
     result = arr.reduce((prev,curr)=>{return prev+curr})
     score.innerHTML = result
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return result
 }
 

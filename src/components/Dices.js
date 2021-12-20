@@ -38,18 +38,8 @@ const Dices = () => {
 
     
     useEffect(()=>{
-   
         setHistory()
-        // const allScore = JSON.parse(window.localStorage.getItem('gamesHistory'))
-        // let score = ""
-        // if(allScore.length != 0 && allScore){
-        //     score = Math.max(...allScore)
-        //     setHighScore(score)
-        // }
     },[])
-
-
-    
 
     const setHistory = () =>{
         if(localStorage.getItem('gamesHistory') === null){
