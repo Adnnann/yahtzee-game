@@ -202,7 +202,7 @@ div.ui.card.diceImages{
 } 
 .gameOver{
   margin-top: 7%;
-  padding-top:10%;
+  padding-top:5%;
   opacity: 1;
   height: 70%;
 }
@@ -304,17 +304,17 @@ button.ui.button.restart.restart{
     margin-top: 11%;
     padding-top:7%;
     opacity: 1;
-    height: 30%;
+    height: 50%;
     width: 100%;
     margin-left: 0;
   }
 }
-@media (min-width:40px) and (min-height:655px){
+@media (min-width:400px) and (min-height:655px){
   .gameOver{
-    margin-top: 11%;
+    margin-top: 7%;
     padding-top:7%;
     opacity: 1;
-    height: 30%;
+    height: 50%;
     width: 100%;
     margin-left: 0;
   }
