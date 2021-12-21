@@ -339,16 +339,19 @@ if(round === 13){
     return(
        
  <>
-    <di><h1>{highScore ? `High score: ${highScore}` : null}</h1></di>
-    <h1 style={{ marginTop:"0",margin:"0 auto",fontSize:"48px",marginBottom:"0"}}>Yatzy</h1>
+    <div className="highScoreContainer"><h1 className="highScore">{highScore ? `High score: ${highScore}` : null}</h1></div>
+    <br />
+  <h1 className="gameName">Yatzy</h1>
         
  <GameOver />
+ <div className="diceContainer">
         {diceImg.map(item=>{
-            return <Card style={{backgroundColor:"white", display:"inline-flex", width:"8%", marginRight:"1%", marginTop:"1%"}} className="diceImages">{item}</Card>
+            return <Card  className="diceImages">{item}</Card>
         })}
-        <div style={{height:"10%"}}>
-       <Button id="shuffleDices" className="shuffleDices" type="button" onClick={shuffleDices} disabled={numberOfTries === 0 ? true : false}>{numberOfTries} 
-       {numberOfTries === 2 || numberOfTries === 0 ? ' rolls' : ' roll'} left</Button>
+</div>
+        <div className="shuffleDice">
+       <button id="shuffleDices" className="shuffleDices" type="button" onClick={shuffleDices} disabled={numberOfTries === 0 ? true : false}>{numberOfTries} 
+       {numberOfTries === 2 || numberOfTries === 0 ? ' rolls' : ' roll'} left</button>
        </div>
        <ScoringCategory scoringHandler={scoreHandler} totalScore={totalScore} />
        </>      

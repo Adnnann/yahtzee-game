@@ -8,7 +8,7 @@ const restart = () => {
 }
    return createPortal(
     <div id="gameOver" className="gameOver">  
-        <Button onClick={restart} style={{width:"25%",height:"60px", marginTop:"15%",opacity:"1"}}>Start New Game</Button>
+        <Button onClick={restart} className="restart" style={{position:"relative"}}>Start New Game</Button>
     </div>,
     document.getElementById('modal')
    )
