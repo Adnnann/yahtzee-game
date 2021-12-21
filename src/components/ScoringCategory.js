@@ -67,7 +67,7 @@ const ScoringCategory = ({scoringHandler, totalScore}) => {
 let dices = []
     for(let i = 0; i< scoringCategory.length; i++){
        dices[i] = <Table.Row key={i} onClick={scoringHandler} id={`scoreRow-${i+1}`}>
-            <Table.Cell id={`scoreCategory-${i+1}`}>{scoringCategory[i].type}</Table.Cell>
+            <Table.Cell id={`scoreCategory-${i+1}`} className='test'>{scoringCategory[i].type}</Table.Cell>
             <Table.Cell id={`scoreDescription-${i+1}`} className='description'>{scoringCategory[i].description}</Table.Cell>
           </Table.Row>
     }

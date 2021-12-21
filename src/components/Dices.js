@@ -235,90 +235,97 @@ if(round === 13){
      const scoreHandler = (e) => {
         
       const id = e.target.id
-      let num = 0
-      setRound(round+1)
-    
-      switch(id){
-        case 'scoreCategory-1':
-            ones(id, diceValues)
-            num = ones(id, diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            break;
-        case 'scoreCategory-2':
-            
-            twos(id, diceValues)
-            num = twos(id, diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            
-            break;
-        case 'scoreCategory-3':
-            threes(id, diceValues)
-            num = threes(id, diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            break;
-        case 'scoreCategory-4':
-            fours(id, diceValues)
-            num = fours(id, diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            break;
-        case 'scoreCategory-5':
-            fives(id, diceValues)
-            num = fives(id, diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            break;
-        case 'scoreCategory-6':
-            sixes(id, diceValues)
-            num = sixes(id, diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            break;
-        case 'scoreCategory-7':
-            threeOfKind(id, diceValues)
-            num = threeOfKind(id, diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            break;
-        case 'scoreCategory-8':
-            fourOfKind(id, diceValues)
-            num = fourOfKind(id, diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            break;
-        case 'scoreCategory-9':
-            fullHouse(id, diceValues)
-            num = fullHouse(id, diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            break;
-        case 'scoreCategory-10':
-            smallStraight(id, diceValues)
-            num = smallStraight(id, diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            break;
-        case 'scoreCategory-11':
-            largeStraight(id, diceValues)
-            num = largeStraight(id,diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            break;
-        case 'scoreCategory-12':
-           yatzee(id, diceValues)
-           num = yatzee(id, diceValues)
-           setTotalScore(totalScore+num)
-           newRound()
-            break;
-        case 'scoreCategory-13':
-            chance(id, diceValues)
-            num = chance(id, diceValues)
-            setTotalScore(totalScore+num)
-            newRound()
-            break;
+      
+      if(e.target.className === `test`){
+        let num = 0
+        setRound(round+1)
+      
+        switch(id){
+          case 'scoreCategory-1':
+              ones(id, diceValues)
+              num = ones(id, diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              break;
+          case 'scoreCategory-2':
+              
+              twos(id, diceValues)
+              num = twos(id, diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              
+              break;
+          case 'scoreCategory-3':
+              threes(id, diceValues)
+              num = threes(id, diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              break;
+          case 'scoreCategory-4':
+              fours(id, diceValues)
+              num = fours(id, diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              break;
+          case 'scoreCategory-5':
+              fives(id, diceValues)
+              num = fives(id, diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              break;
+          case 'scoreCategory-6':
+              sixes(id, diceValues)
+              num = sixes(id, diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              break;
+          case 'scoreCategory-7':
+              threeOfKind(id, diceValues)
+              num = threeOfKind(id, diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              break;
+          case 'scoreCategory-8':
+              fourOfKind(id, diceValues)
+              num = fourOfKind(id, diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              break;
+          case 'scoreCategory-9':
+              fullHouse(id, diceValues)
+              num = fullHouse(id, diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              break;
+          case 'scoreCategory-10':
+              smallStraight(id, diceValues)
+              num = smallStraight(id, diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              break;
+          case 'scoreCategory-11':
+              largeStraight(id, diceValues)
+              num = largeStraight(id,diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              break;
+          case 'scoreCategory-12':
+             yatzee(id, diceValues)
+             num = yatzee(id, diceValues)
+             setTotalScore(totalScore+num)
+             newRound()
+              break;
+          case 'scoreCategory-13':
+              chance(id, diceValues)
+              num = chance(id, diceValues)
+              setTotalScore(totalScore+num)
+              newRound()
+              break;
+      }
+     
+      }else{
+          console.log(e.target.id)
+          return
       }
       
     }
@@ -332,7 +339,7 @@ if(round === 13){
     return(
        
  <>
-    <di><h1 style={{ marginBottom:"0", float:"right"}}>{highScore ? `High score: ${highScore}` : null}</h1></di>
+    <di><h1>{highScore ? `High score: ${highScore}` : null}</h1></di>
     <h1 style={{ marginTop:"0",margin:"0 auto",fontSize:"48px",marginBottom:"0"}}>Yatzy</h1>
         
  <GameOver />
@@ -340,7 +347,7 @@ if(round === 13){
             return <Card style={{backgroundColor:"white", display:"inline-flex", width:"8%", marginRight:"1%", marginTop:"1%"}} className="diceImages">{item}</Card>
         })}
         <div style={{height:"10%"}}>
-       <Button id="shuffleDices" type="button" onClick={shuffleDices} style={{width:"20%",fontSize:"26px", marginLeft:"10%"}} disabled={numberOfTries === 0 ? true : false}>{numberOfTries} 
+       <Button id="shuffleDices" className="shuffleDices" type="button" onClick={shuffleDices} disabled={numberOfTries === 0 ? true : false}>{numberOfTries} 
        {numberOfTries === 2 || numberOfTries === 0 ? ' rolls' : ' roll'} left</Button>
        </div>
        <ScoringCategory scoringHandler={scoreHandler} totalScore={totalScore} />

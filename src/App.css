@@ -1,3 +1,16 @@
+@media only screen and (min-width < 768px) {
+  .logo{
+    visibility: "hidden";
+  }
+  button{
+    width:2px;
+    font-size: 2px;
+  }
+  h1{
+    display:none
+  }
+}
+
 .App {
   text-align: center;
 }
@@ -80,4 +93,14 @@
 .description{
   pointer-events: none;
 
+}
+.shuffleDices{
+  width:20%;
+  font-size:26px;
+  margin-left:10%;
+}
+
+.logo{
+  display:inline;
+  float:left;
 }
