@@ -5,7 +5,7 @@ import Image3 from '../assets/three.png'
 import Image4 from '../assets/four.png'
 import Image5 from '../assets/five.png'
 import Image6 from '../assets/six.png'
-import { Button, Card } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import ScoringCategory from "./ScoringCategory";
 import GameOver from "./GameOver";
@@ -345,8 +345,8 @@ if(round === 13){
         
  <GameOver />
  <div className="diceContainer">
-        {diceImg.map(item=>{
-            return <Card  className="diceImages">{item}</Card>
+        {diceImg.map((item, index)=>{
+            return <Card  className="diceImages" key={index}>{item}</Card>
         })}
 </div>
         <div className="shuffleDice">
