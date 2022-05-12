@@ -24,3 +24,6 @@ App is composed of five components
 
 ## Dependencies
 semantic-ui is used in the app
+
+## Try on SandBox
+https://codesandbox.io/s/nice-lamarr-vwq49t?file=/src/App.js
