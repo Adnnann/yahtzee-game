@@ -1,6 +1,6 @@
 # Description
 
-This is my implementation of game of Yatze. Game is played with 5 dices and there are 13 rounds. User can throw dices for three times in each round, but first throwing occurs every time when user starts game.
+This is my implementation of game of Yahtzee. Game is played with 5 dices and there are 13 rounds. User can throw dices for three times in each round, but first throwing occurs every time when user starts game.
 
 After each round user can write his or her result in any of available scoring categories enlisted bellow dices and score cooresponding number of points in case if values of the dices match description criteria. Total score is updated after every move.
 
