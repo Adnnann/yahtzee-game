@@ -26,4 +26,5 @@ App is composed of five components
 semantic-ui is used in the app
 
 ## Try on SandBox
-https://codesandbox.io/s/nice-lamarr-vwq49t?file=/src/App.js
+[https://codesandbox.io/s/nice-lamarr-vwq49t?file=/src/App.js](https://nvq09w.csb.app/)
+
