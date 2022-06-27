@@ -43,14 +43,14 @@ const Dices = () => {
 
     const setHistory = () => {
         if (
-          localStorage.getItem("gamesHistory") === null ||
+          localStorage.getItem("gamesHistory") === null &&
           localStorage.getItem("gameHighScore") === null
         ) {
           window.localStorage.setItem("gamesHistory", JSON.stringify([]));
           window.localStorage.setItem("gameHighScore", JSON.stringify(0));
         } else {
           let savedHistory = JSON.parse(localStorage.getItem("gamesHistory"));
-          let highScore = JSON.parse(localStorage.getItem("gameHighScore"));
+          let highScore = localStorage.getItem("gameHighScore");
     
           setGamesHistory(savedHistory);
           setHighScore(highScore);
