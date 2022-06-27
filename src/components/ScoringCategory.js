@@ -5,7 +5,6 @@ const ScoringCategory = ({scoringHandler, totalScore}) => {
 
     const [scoringCategory, setScoringCategory] = useState([
         {
-// WORKS FINE. REPLICATE IN ALL FOLLOWING PARTS
             type: "Ones",
             description:"Score 1 for every 1",
             
@@ -49,15 +48,15 @@ const ScoringCategory = ({scoringHandler, totalScore}) => {
             description:"If 4+ values in the row, score 30",
          
         },
-        {// GOOD
+        {
             type:"Large Straight",
             description:"If 5 values in a row score 40",
         },
-        { //GOOD
+        { 
             type:"Yatzy",
             description:"If all values match, score 50",
         },
-        { //GOOD
+        { 
             type:"Chance",
             description:"Score sum of all dice",      
         }
