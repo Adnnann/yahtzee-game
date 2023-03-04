@@ -105,7 +105,7 @@ const [scoringCategory, setScoringCategory] = useState([
 
   return (
     <TableContainer component={Paper} style={{marginTop:"20px"}}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <Table sx={{ xs:{maxWidth:300}, md:{minWidth: 700} }} aria-label="customized table">
         <TableHead>
           <TableRow>
           {heading.map((head, index) => (
