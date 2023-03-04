@@ -7,7 +7,6 @@ import Image5 from '../assets/five.png'
 import Image6 from '../assets/six.png'
 import { Card } from "semantic-ui-react";
 import { useEffect, useState } from "react";
-import ScoringCategory from "./ScoringCategory";
 import GameOver from "./GameOver";
 import {  
     ones,
@@ -23,20 +22,24 @@ import {
     largeStraight,
     yatzee,
     chance} from "../helpers";
+import { CardMedia } from "@mui/material";
+import ScoringTable from "./ScoringTable";
 
 const Dices = () => {
 
     const [numberOfTries, setNumberOfTries] = useState(2)
-    const [diceImg, setDiceImag] = useState([])
+    const [dices, setDices] = useState([])
     const [diceValues, setDiceValues] = useState([])
-    const [disable, setDisable] = useState([])
+    const [selectedDice, setSelectedDice] = useState([false,false,false,false,false])
+   
     const [totalScore, setTotalScore] = useState(0)
-    const [rolling, setRolling] = useState("die")
     const [round, setRound] = useState(0)
     const [gamesHistory, setGamesHistory] = useState([]);
     const [highScore, setHighScore] = useState()
-
-    
+    const [rotate, setRotate] = useState(false)
+    const [usedCategory, setUsedCategory] = useState(Array(13).fill(false))
+    const [selectedValues, setSelectedValues] = useState(Array(5).fill(0))
+   
     useEffect(()=>{
         setHistory()
     },[])
@@ -57,9 +60,7 @@ const Dices = () => {
         }
       };
     
-
-
-    const updateResult = () =>{
+    const updateResult = () => {
         setGamesHistory([...gamesHistory, totalScore])
         window.localStorage.setItem('gamesHistory',totalScore)
         
@@ -82,260 +83,168 @@ const Dices = () => {
 }
 
 
-if(round === 13){
-    updateResult()
-    document.getElementById('gameOver').style.visibility = "visible"
-    document.querySelectorAll('.diceImages').forEach(el=>{
-        el.style.visibility = "hidden"
-    })
-    document.getElementById('shuffleDices').style.visibility = "hidden"
-    
-    setRound(0)
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+// if(round === 13){
+//     updateResult()
+//     setRound(0)
+//     window.scrollTo({ top: 0, behavior: 'smooth' });
+// }
 
-
-
-    let status = []
-    status = Array(5).fill(false)
-
-    const dice = {"img0":Image1, "img1":Image2, "img2":Image3, "img3":Image4, "img4":Image5,"img5":Image6}
 
     useEffect(()=>{
-        initImages()
+        startGame()
     },[])
 
  
-    if(numberOfTries === 2){
-        
+    const diceFunction = (event, index) => {
+        selectedDice[index] = true
+        setSelectedDice([...selectedDice])
+      
+        setRotate(false)
+        selectedDice[index] = event.target.src 
+        setSelectedDice([...selectedDice])  
+        selectedValues[index] = diceValues[index]
+        setSelectedValues([...selectedValues])
+
     }
-    const diceFunction = (e) => {
 
-        
-        const id = e.target.id
-        e.target.classList.add('dont')
-        e.preventDefault()
+    const shuffleDices = () => {
+        play()
+        setNumberOfTries(numberOfTries - 1) 
+                      
+    }
 
-        if(id === 'dice-0'){
-            status[0] = true;
-        }else if(id === 'dice-1'){
-            status[1] = true;
-        }else if(id === 'dice-2'){
-            status[2] = true;
-        }else if(id === 'dice-3'){
-            status[3] = true;
-        }else if(id === 'dice-4'){
-            status[4] = true;
-        }else if(id === 'dice-5'){
-            status[5] = true;
-        }
-        setDisable(status)
-        e.target.style.opacity = "0.2"  
-     
+    const newRound = () => {
+        setRotate(true)
+        setNumberOfTries(2)    
+        setDices(dices)
+    }
+
+const play = () => {
+    const dices = [Image1, Image2, Image3, Image4, Image5, Image6]
+    let arr = []
+    let diceValues = []   
+    for(let i = 0; i < 5; i++){
+        let diceIndex = Math.floor(Math.random() *  6)
+        diceValues.push(diceIndex +1)
+        arr.push(dices[diceIndex])
+    }
+    setDices(arr)
+    setDiceValues(diceValues)    
+}
+
+    const startGame = () => {
+        play()
+        setNumberOfTries(2)
     }
    
-    let dices = []
-    const shuffleDices = () => {
-
-        if(rolling === 'die'){
-            setRolling('die2')
-        }else{
-            setRolling('die')
-        }
-
-        if(disable.length > 0){
-            disable.map((item, index)=>{
-                status[index] = item
-            })
-        }
- 
-        let arrayOfDices = []
-        for(let i=0;i<5;i++){
-            if(!disable[i]){
-                let random = Math.floor(Math.random()*6)
-                let image = dice[`img${random}`]
-                dices[i] = <Die image={image} key={i} value={random+1} diceHandler={diceFunction} id={`dice-${i}`} disabled={disable[i]} rolling={rolling}/>   
-            }else if(disable){
-                dices[i] = <Die image={dice[`img${diceValues[i]-1}`]} key={i} value={diceValues[i]} diceHandler={diceFunction} id={`dice-${i}`} disabled={disable[i]} 
-                />  
+    const scoringHandler = (event, index) => {
+//in case user click the category without rolling the dices
+//or selecting all the dices manually
+        diceValues.map((item, index)=>{
+            if(selectedValues[index] === 0){
+                selectedValues[index] = item
+                setSelectedValues([...selectedValues])
             }
             
-        }
-
-        setDiceImag(dices)
-        setNumberOfTries(numberOfTries - 1)                  
-        
-        dices.forEach(el=>{
-            arrayOfDices.push(el.props.value)
+           
         })
-
-        setDiceValues([...arrayOfDices])
-
-    }
-
-    
-    const newRound = () => {
-
-        if(rolling === 'die'){
-            setRolling('die2')
-        }else{
-            setRolling('die')
-        }
-
-        let dices = []
-        let arrayOfDices = []
-
-        for(let i=0;i<5;i++){
-            let random = Math.floor(Math.random()*6)
-            let image = dice[`img${random}`]
-            dices[i] = <Die image={image} key={i} value={random+1} diceHandler={diceFunction} id={`dice-${i}`} disabled={disable[i]} rolling={rolling}/>   
-        }
-
-        setNumberOfTries(2)    
-        setDiceImag(dices)
-                 
-        dices.forEach(el=>{
-            arrayOfDices.push(el.props.value)
-        })
-
-        setDiceValues([...arrayOfDices])
-
-        document.querySelectorAll('.dices').forEach(el=>{
-            el.style.opacity = 1
-        })
-   
-    }
-
-    const initImages = () =>{
-        
-        if(rolling === 'die'){
-            setRolling('die2')
-        }else{
-            setRolling('die')
-        }
-  
-        let arrayOfDices = []
-        for(let i=0;i<5;i++){
-            if(!disable[i]){
-                let random = Math.floor(Math.random()*6)
-                let image = dice[`img${random}`]
-                dices[i] = <Die image={image} key={i} value={random+1} diceHandler={diceFunction} id={`dice-${i}`} disabled={disable[i]} rolling={rolling}/>   
-   
-                arrayOfDices.push(random+1)
-            }else if(disable){
-                dices[i] = <Die image={dice[`img${diceValues[i]-1}`]} key={i} value={diceValues[i]} diceHandler={diceFunction} id={`dice-${i}`} 
-                disabled={disable[i]} rolling={rolling}/>  
-                arrayOfDices.push(diceValues[i])
-
-            }
-
-        }
- 
-        setDiceImag(dices)
-        setDiceValues([...arrayOfDices])
-    }
-
-    
-    
-     const scoreHandler = (e) => {
-        
-      const id = e.target.id
-      
-      if(e.target.className === `test`){
-        let num = 0
-        setRound(round+1)
-      
-        switch(id){
-          case 'scoreCategory-1':
-              ones(id, diceValues)
-              num = ones(id, diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              break;
-          case 'scoreCategory-2':
-              
-              twos(id, diceValues)
-              num = twos(id, diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              
-              break;
-          case 'scoreCategory-3':
-              threes(id, diceValues)
-              num = threes(id, diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              break;
-          case 'scoreCategory-4':
-              fours(id, diceValues)
-              num = fours(id, diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              break;
-          case 'scoreCategory-5':
-              fives(id, diceValues)
-              num = fives(id, diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              break;
-          case 'scoreCategory-6':
-              sixes(id, diceValues)
-              num = sixes(id, diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              break;
-          case 'scoreCategory-7':
-              threeOfKind(id, diceValues)
-              num = threeOfKind(id, diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              break;
-          case 'scoreCategory-8':
-              fourOfKind(id, diceValues)
-              num = fourOfKind(id, diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              break;
-          case 'scoreCategory-9':
-              fullHouse(id, diceValues)
-              num = fullHouse(id, diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              break;
-          case 'scoreCategory-10':
-              smallStraight(id, diceValues)
-              num = smallStraight(id, diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              break;
-          case 'scoreCategory-11':
-              largeStraight(id, diceValues)
-              num = largeStraight(id,diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              break;
-          case 'scoreCategory-12':
-             yatzee(id, diceValues)
-             num = yatzee(id, diceValues)
-             setTotalScore(totalScore+num)
-             newRound()
-              break;
-          case 'scoreCategory-13':
-              chance(id, diceValues)
-              num = chance(id, diceValues)
-              setTotalScore(totalScore+num)
-              newRound()
-              break;
-      }
-     
+        console.log('selected val',selectedValues)
+        usedCategory[index] = true
+        setUsedCategory([...usedCategory])
+        // functions for scoring for ones, twos, threes, fours, fives, sixes
+        if(index < 6){
+          const values = selectedValues.filter((value) => value === index+1)
+          if(values.length > 0){
+            const result = values.reduce((acc, value) => acc + value) 
+            setTotalScore(totalScore+result)
+          }else{
+            setTotalScore(totalScore)
+          }
       }else{
-          console.log(e.target.id)
-          return
-      }
+        // functions for scoring for three of a kind, four of a kind, full house, small straight, large straight, yatzy, chance
+        switch(index){ 
+         case 6:
+            let threeOfKind = new Set(diceValues)
+            threeOfKind = [...threeOfKind]
+            threeOfKind.map(value=>{
+                let res = selectedValues.filter((item) => item === value)
+                if(res.length >= 3){
+                    const result = res.reduce((acc, value) => acc + value)
+                    setTotalScore(totalScore+result)
+                }else{
+                    setTotalScore(totalScore)
+                }
+
+            })
+             break;
+            case 7:
+                let fourOfKind = new Set(diceValues)
+                fourOfKind = [...fourOfKind]
+                fourOfKind.map(value=>{
+                    let res = selectedValues.filter((item) => item === value)
+                    if(res.length >= 4){
+                        const result = res.reduce((acc, value) => acc + value)
+                        setTotalScore(totalScore+result)
+                    }else{
+                        setTotalScore(totalScore)
+                    }
+    
+                })
+                break;
+            case 8:
+                let fullHouse = new Set(selectedValues)
+                fullHouse = [...fullHouse]
+
+                if(fullHouse.length === 2){
+                    setTotalScore(totalScore+25)
+                }else{
+                    setTotalScore(totalScore)
+                }
+                break;
+            case 9:
+                const smallStraight = new Set(selectedValues)
+                console.log('small straight', smallStraight)
+                    if(smallStraight.has(2) && smallStraight.has(3) && smallStraight.has(4) && (smallStraight.has(1) || smallStraight.has(5) || smallStraight.has(6))){
+                        setTotalScore(totalScore+30)
+                    }else{
+                        setTotalScore(totalScore)
+                    }
+                break;
+            case 10:
+
+                const largeStraight = new Set(selectedValues)
+                    if(largeStraight.has(2) && largeStraight.has(3) && largeStraight.has(4) && largeStraight.has(5) && (largeStraight.has(1) || largeStraight.has(6))){
+                        setTotalScore(totalScore+40)
+                    }else{
+                        setTotalScore(totalScore)
+                    }
+                break;
+            case 11:
+                let yatzy = new Set(selectedValues)
+                yatzy = [...yatzy]
+                if(yatzy.length === 1){
+                    setTotalScore(totalScore+50)
+                }else{
+                    setTotalScore(totalScore)
+                }
+                break;
+            case 12:
+                const result = selectedValues.reduce((acc, value) => acc + value)
+                setTotalScore(totalScore+result)
+                break;
+            default:
+                break;
+            }
+        }
+
+          
+        setSelectedDice(Array(5).fill(false))
+        setSelectedValues(Array(5).fill(0))
+        play()
+        setNumberOfTries(2)
+        setRotate(true)
       
     }
-
-
 
     useEffect(()=>{
         localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory))
@@ -350,15 +259,36 @@ if(round === 13){
         
  <GameOver />
  <div className="diceContainer">
-        {diceImg.map((item, index)=>{
-            return <Card  className="diceImages" key={index}>{item}</Card>
-        })}
+        {dices.map((item, index)=>{
+            if(index < 5){
+                return (
+                <Card  className="diceImages" key={index}>
+                    <CardMedia 
+                    component={'img'} 
+                    image={selectedDice[index] ? selectedDice[index] :  dices[index]} 
+                    className={rotate && !selectedDice[index] ? "die2" : null }
+                    onClick={(event)=>diceFunction(event, index)} 
+                    style={{
+                        cursorEvent: selectedDice[index] ? "none" : "all",
+                        opacity: selectedDice[index] ? "0.2" : "1"
+                    }}
+                    />
+                </Card>)
+            }
+        })
+        }
 </div>
         <div className="shuffleDice">
        <button id="shuffleDices" className="shuffleDices" type="button" onClick={shuffleDices} disabled={numberOfTries === 0 ? true : false}>{numberOfTries} 
        {numberOfTries === 2 || numberOfTries === 0 ? ' rolls' : ' roll'} left</button>
        </div>
-       <ScoringCategory scoringHandler={scoreHandler} totalScore={totalScore} />
+       <ScoringTable
+        scoringHandler={scoringHandler}
+        totalScore={totalScore}
+        usedCategory={usedCategory}
+        />
+       
+     
        </>      
     )
 }

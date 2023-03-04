@@ -15,7 +15,7 @@
 }
 
 .die {
-  animation:  App-logo-spin 0.5s ease-in-out;
+  animation:  die 0.5s ease-in-out;
 }
 
 .die2 {
@@ -50,6 +50,18 @@
 }
 
 @keyframes die2 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+  100% {
+    pointer-events: none;
+  }
+}
+
+@keyframes die {
   from {
     transform: rotate(0deg);
   }

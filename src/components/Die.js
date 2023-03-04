@@ -1,12 +1,17 @@
 import '../App.css'
 
 
-const Die = ({image, disabled, diceHandler, id, rolling}) => {
+const Die = ({image, disabled, diceHandler, id, classes}) => {
 
 
     return(
         
-        <img src={image}  onClick={diceHandler} status={disabled} id={id} className= {`dices ${rolling}`}  alt="die"/>
+        <img 
+        src={image}  
+        onClick={diceHandler} 
+        id={id} 
+        className={classes} 
+        alt="die"/>
        
     )
 }

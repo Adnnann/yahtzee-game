@@ -1,6 +1,5 @@
 import { createPortal } from "react-dom"
-import { Button } from "semantic-ui-react"
-
+import {Button }from '@mui/material';
 const GameOver = () => {
 
 const restart = () => {
