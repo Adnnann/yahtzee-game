@@ -16,7 +16,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 16,
   },
 }));
 
@@ -29,11 +29,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
 
 export default function ScoringTable(props) {
 const { 
@@ -104,14 +99,23 @@ const [scoringCategory, setScoringCategory] = useState([
  const heading = ["Category", "Description"]
 
   return (
-    <TableContainer component={Paper} style={{marginTop:"20px"}}>
-      <Table sx={{ xs:{maxWidth:300}, md:{minWidth: 700} }} aria-label="customized table">
+    <TableContainer 
+    component={Paper} 
+    style={{marginTop:"20px"}}
+    sx={{
+      width:{xs:360,md:'100%'},
+      marginLeft:{xs:1, md: "0", lg: "0", xl: "0"},
+      marginRight:{xs:1, md: "0", lg: "0", xl: "0"},
+    }}>
+      <Table aria-label="customized table">
         <TableHead>
           <TableRow>
           {heading.map((head, index) => (
             <StyledTableCell 
             key={head}
-            style={{textAlign: index === 1 ? 'right':'left'}}>
+            style={{
+              backgroundColor:'grey',
+              textAlign: index === 1 ? 'right':'left'}}>
             <Typography variant='h5'>{head}</Typography>
             </StyledTableCell>
           )

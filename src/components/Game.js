@@ -11,6 +11,7 @@ import Image3 from '../assets/three.png'
 import Image4 from '../assets/four.png'
 import Image5 from '../assets/five.png'
 import Image6 from '../assets/six.png'
+import GameOver from './GameOver';
 
 export default function Game() {
 
@@ -23,13 +24,36 @@ const [totalScore, setTotalScore] = useState(0)
 const [round, setRound] = useState(0)
 const [gamesHistory, setGamesHistory] = useState([]);
 const [highScore, setHighScore] = useState()
-const [rotate, setRotate] = useState(false)
+const [rotate, setRotate] = useState(true)
 const [usedCategory, setUsedCategory] = useState(Array(13).fill(false))
 const [selectedValues, setSelectedValues] = useState(Array(5).fill(0))
-
+const [gameOverModal, setGameOverModal] = useState(false)
+const [moveHistory, setMoveHistory] = useState(0)
+const [gameStatus, setGameStatus] = useState('pending')
+const [newMove, setNewMove] = useState(false)
+console.log(highScore)
 useEffect(()=>{
-    setHistory()
-},[])
+    if(gameStatus === 'pending'){
+        setHistory()
+    }
+   
+
+    if(moveHistory === 13){
+        setGameOverModal(true)
+        updateResult()
+        window.scrollTo(0, 0)
+        setMoveHistory(0)
+    }
+
+   gameStatus === 'pending' && startGame()
+    if(newMove){
+        console.log('new move')
+        setRotate(true)
+        setNewMove(false)
+    }
+   
+
+},[moveHistory, gameStatus, newMove])
 
 const setHistory = () => {
     if (
@@ -48,36 +72,17 @@ const setHistory = () => {
   };
 
 const updateResult = () => {
-    setGamesHistory([...gamesHistory, totalScore])
-    window.localStorage.setItem('gamesHistory',totalScore)
+    window.localStorage.setItem('gamesHistory', JSON.stringify([...gamesHistory, totalScore]))
+    window.localStorage.setItem('gameHighScore', JSON.stringify(Math.max(...gamesHistory, totalScore)))
+    //console.log(Math.max(...gamesHistory, totalScore))
     
-
-    if(gamesHistory.length !== 0){
-        let score = Math.max(...gamesHistory)
-
-        if(totalScore < score){
-            setHighScore(score)
-            window.localStorage.setItem('gameHighScore',score)
-        }else{
-            setHighScore(totalScore)
-            window.localStorage.setItem('gameHighScore',totalScore)
-        }   
-    }else{
-        setHighScore(totalScore)
-        window.localStorage.setItem('gameHighScore',totalScore)
-    }
+        
 
 }
-
-useEffect(()=>{
-    startGame()
-},[])
-
 
 const diceFunction = (event, index) => {
     selectedDice[index] = true
     setSelectedDice([...selectedDice])
-  
     setRotate(false)
     selectedDice[index] = event.target.src 
     setSelectedDice([...selectedDice])  
@@ -89,15 +94,10 @@ const diceFunction = (event, index) => {
 const shuffleDices = () => {
     play()
     setNumberOfTries(numberOfTries - 1) 
+    setNewMove(true)
+    setRotate(false)
                   
 }
-
-const newRound = () => {
-    setRotate(true)
-    setNumberOfTries(2)    
-    setDices(dices)
-}
-
 const play = () => {
 const dices = [Image1, Image2, Image3, Image4, Image5, Image6]
 let arr = []
@@ -112,6 +112,7 @@ setDiceValues(diceValues)
 }
 
 const startGame = () => {
+    setGameStatus('started')
     play()
     setNumberOfTries(2)
 }
@@ -216,22 +217,35 @@ const scoringHandler = (event, index) => {
         }
     }
 
-      
+    setMoveHistory(moveHistory+1)
     setSelectedDice(Array(5).fill(false))
     setSelectedValues(Array(5).fill(0))
     play()
     setNumberOfTries(2)
-    setRotate(true)
+    setNewMove(true)
+    setRotate(false)
+    
   
 }
 
-useEffect(()=>{
-    localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory))
-}, [gamesHistory])
+
+
+const restart = () => {
+    setTotalScore(0)
+    setUsedCategory(Array(13).fill(false))
+    setGamesHistory([...gamesHistory, totalScore])
+    setNumberOfTries(2)
+    setRotate(false)
+    setMoveHistory(0)
+    play()
+    setGameOverModal(false)
+}
 
 return (
 <Grid container justifyContent='center' spacing={1}>
-<Header logo={logo} />
+<Header 
+logo={logo}
+highScore={highScore ? highScore : null} />
    <Dices
     dices={dices}
     diceFunction={diceFunction}
@@ -241,7 +255,8 @@ return (
 
 <Grid item xs={12} md={12} lg={12} xl={12} style={{textAlign:'center'}}>
     <Button 
-    style={{minWidth:'260px', borderRadius:"25px", margin:'10px', minHeight:'80px', fontSize:'24px', fontWeight:'bold'}}
+    style={{minWidth:'260px', borderRadius:"25px", margin:'10px', fontSize:'24px', fontWeight:'bold'}}
+    sx={{height:{xs:'40px',  md:'60px', lg:'60px', xl:'60px'}}}
     variant="contained"
     onClick={shuffleDices} 
     disabled={numberOfTries === 0 ? true : false}>
@@ -255,6 +270,7 @@ return (
         usedCategory={usedCategory}
         />
 </Grid>
+    <GameOver open={gameOverModal} restart={restart} score={totalScore}/>
 </Grid>
   )
 
